@@ -197,11 +197,6 @@
             position: relative;
         }
         
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-        }
-        
         .card-link {
             text-decoration: none;
             color: inherit;
@@ -1040,22 +1035,6 @@
         updateGreeting();
         updateCarousel();
         
-        // Simple animation on scroll
-        document.addEventListener('DOMContentLoaded', function() {
-            const sections = document.querySelectorAll('.section');
-            
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('fade-in');
-                    }
-                });
-            }, { threshold: 0.1 });
-            
-            sections.forEach(section => {
-                observer.observe(section);
-            });
-            
             // All links open in same tab (default behavior)
             document.querySelectorAll('.card-link').forEach(link => {
                 link.addEventListener('click', function(e) {
