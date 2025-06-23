@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Educational App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            padding-bottom: 50px;
+        }
+        
+        /* Header Styles */
+        header {
+            padding: 15px;
+            text-align: left;
+        }
+        
+        .greeting {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        /* Carousel Styles */
+        .carousel-container {
+            position: relative;
+            width: calc(100% - 30px);
+            margin: 15px auto;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .carousel {
+            display: flex;
+            width: 300%;
+            height: 180px;
+            transition: transform 0.5s ease-in-out;
+        }
+        
+        .carousel-slide {
+            width: 33.333%;
+            height: 100%;
+        }
+        
+        .carousel-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            background-color: #f0f0f0;
+        }
+        
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.7);
+            border: none;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            font-size: 1rem;
+            color: #333;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .carousel-btn:hover {
+            background: rgba(255,255,255,0.9);
+        }
+        
+        #prevBtn {
+            left: 10px;
+        }
+        
+        #nextBtn {
+            right: 10px;
+        }
+        
+        .carousel-indicators {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            z-index: 10;
+        }
+        
+        .indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .indicator.active {
+            background: white;
+            transform: scale(1.3);
+        }
+        
+        /* Section Header Styles */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 15px;
+            margin-bottom: 10px;
+        }
+        
+        .section-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #444;
+            position: relative;
+            padding-left: 10px;
+        }
+        
+        .section-title::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 70%;
+            width: 4px;
+            background: linear-gradient(to bottom, #6e8efb, #a777e3);
+            border-radius: 2px;
+        }
+        
+        .see-all {
+            color: #6e8efb;
+            font-size: 0.9rem;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        .see-all:hover {
+            color: #a777e3;
+            transform: translateX(5px);
+        }
+        
+        .see-all i {
+            margin-left: 5px;
+            font-size: 0.8rem;
+        }
+        
+        /* Scrollable Card Containers */
+        .scroll-container {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            padding: 0 15px 15px;
+            gap: 15px;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        
+        .scroll-container::-webkit-scrollbar {
+            display: none;
+        }
+        
+        /* Card Styles */
+        .card {
+            scroll-snap-align: start;
+            flex: 0 0 auto;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        }
+        
+        .card-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        
+        /* Image Card Styles */
+        .image-card {
+            width: 250px;
+            height: 140px;
+        }
+        
+        .image-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            background-color: #f0f0f0;
+        }
+        
+        /* 3:1 Aspect Ratio Cards */
+        .wide-card {
+            width: 300px;
+            height: 100px;
+        }
+        
+        .wide-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            background-color: #f0f0f0;
+        }
+        
+        /* Video Card Styles */
+        .video-card {
+            width: 200px;
+            height: 120px;
+            position: relative;
+        }
+        
+        .video-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            background-color: #f0f0f0;
+        }
+        
+        .play-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(255,255,255,0.8);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6e8efb;
+        }
+        
+        /* Topic Card Styles */
+        .topics-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            padding: 0 15px;
+        }
+        
+        .topic-card {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .topic-card:hover {
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            color: white;
+            transform: translateY(-3px);
+        }
+        
+        /* Event Card Styles */
+        .event-card {
+            width: 150px;
+            height: 200px;
+        }
+        
+        .event-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            background-color: #f0f0f0;
+        }
+        
+        /* Circle Card Styles */
+        .circle-card {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            color: white;
+            font-weight: bold;
+            text-align: center;
+            padding: 10px;
+            font-size: 0.9rem;
+        }
+        
+        /* Quiz Card Styles */
+        .quiz-card {
+            width: 200px;
+            height: 120px;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: linear-gradient(135deg, #f5f7fa, #e4e8f0);
+        }
+        
+        /* Book Card Styles - Enhanced */
+        .book-card {
+            width: 160px;
+            height: 240px;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        
+        .book-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+        }
+        
+        .book-cover {
+            height: 65%;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .book-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            background-color: #f0f0f0;
+            transition: transform 0.5s ease;
+        }
+        
+        .book-card:hover .book-cover img {
+            transform: scale(1.05);
+        }
+        
+        .book-details {
+            padding: 12px;
+            height: 35%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        .book-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .book-author {
+            font-size: 0.75rem;
+            color: #666;
+        }
+        
+        .book-rating {
+            display: flex;
+            align-items: center;
+            margin-top: 5px;
+        }
+        
+        .stars {
+            color: #FFD700;
+            font-size: 0.7rem;
+            margin-right: 5px;
+        }
+        
+        .book-price {
+            font-weight: bold;
+            color: #6e8efb;
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+        
+        .book-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #ff4757;
+            color: white;
+            font-size: 0.7rem;
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+        
+        /* Notes Card Styles */
+        .notes-card {
+            width: 150px;
+            height: 180px;
+            background: #fff9c4;
+            padding: 15px;
+            position: relative;
+            transform: rotate(-2deg);
+        }
+        
+        .notes-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            border-width: 0 15px 15px 0;
+            border-style: solid;
+            border-color: #fff59d #f5f7fa;
+            box-shadow: -2px 2px 3px rgba(0,0,0,0.1);
+        }
+        
+        /* Article Card Styles */
+        .article-card {
+            width: 220px;
+        }
+        
+        .article-card img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            background-color: #f0f0f0;
+        }
+        
+        .article-content {
+            padding: 10px;
+        }
+        
+        .article-title {
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+        
+        /* Landscape Image Card */
+        .landscape-card {
+            width: calc(100% - 30px);
+            height: 150px;
+            margin: 15px;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        .landscape-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            background-color: #f0f0f0;
+        }
+        
+        /* Wide Image Card */
+        .wide-image-card {
+            width: 300px;
+            height: 50px;
+        }
+        
+        .wide-image-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            background-color: #f0f0f0;
+        }
+        
+        /* Fire Animation Card */
+        .challenge-card {
+            width: calc(100% - 30px);
+            height: 180px;
+            margin: 15px;
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+            background: linear-gradient(135deg, #ff416c, #ff4b2b);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            box-shadow: 0 8px 16px rgba(255, 75, 43, 0.3);
+        }
+        
+        .challenge-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .challenge-desc {
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .challenge-btn {
+            background: white;
+            color: #ff4b2b;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .challenge-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+        }
+        
+        .fire-animation {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path fill="rgba(255,100,50,0.3)" d="M20,70 C30,50 40,70 50,50 C60,70 70,50 80,70 C90,50 100,70 100,70 L100,100 L0,100 L0,70 Z"><animate attributeName="d" dur="3s" repeatCount="indefinite" values="M20,70 C30,50 40,70 50,50 C60,70 70,50 80,70 C90,50 100,70 100,70 L100,100 L0,100 L0,70 Z; M20,70 C30,60 40,80 50,60 C60,80 70,60 80,70 C90,60 100,70 100,70 L100,100 L0,100 L0,70 Z; M20,70 C30,50 40,70 50,50 C60,70 70,50 80,70 C90,50 100,70 100,70 L100,100 L0,100 L0,70 Z" /></path></svg>');
+            background-size: 200% 100%;
+            animation: wave 3s linear infinite;
+            opacity: 0.6;
+        }
+        
+        @keyframes wave {
+            0% { background-position-x: 0%; }
+            100% { background-position-x: 200%; }
+        }
+        
+        .flame {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(ellipse at center, rgba(255,200,0,0.8) 0%, rgba(255,100,0,0.4) 50%, transparent 70%);
+            border-radius: 50% 50% 20% 20%;
+            animation: flicker 2s ease-in-out infinite alternate;
+        }
+        
+        .flame:nth-child(1) {
+            top: 20px;
+            left: 20%;
+            width: 15px;
+            height: 25px;
+            animation-delay: 0.5s;
+        }
+        
+        .flame:nth-child(2) {
+            top: 15px;
+            left: 50%;
+            width: 25px;
+            height: 35px;
+            animation-delay: 0.2s;
+        }
+        
+        .flame:nth-child(3) {
+            top: 25px;
+            right: 20%;
+            width: 18px;
+            height: 28px;
+            animation-delay: 0.7s;
+        }
+        
+        @keyframes flicker {
+            0%, 100% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.2); opacity: 1; }
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        
+        /* Section Spacing */
+        .section {
+            margin-bottom: 25px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="greeting" id="greeting"></div>
+    </header>
+    
+    <!-- Image Carousel -->
+    <div class="carousel-container">
+        <div class="carousel">
+            <div class="carousel-slide">
+                <a href="banner1.html" class="card-link"><img src="" alt=""></a>
+            </div>
+            <div class="carousel-slide">
+                <a href="banner2.html" class="card-link"><img src="" alt=""></a>
+            </div>
+            <div class="carousel-slide">
+                <a href="banner3.html" class="card-link"><img src="" alt=""></a>
+            </div>
+        </div>
+        <button class="carousel-btn" id="prevBtn"><i class="fas fa-chevron-left"></i></button>
+        <button class="carousel-btn" id="nextBtn"><i class="fas fa-chevron-right"></i></button>
+        <div class="carousel-indicators">
+            <div class="indicator active" data-slide="0"></div>
+            <div class="indicator" data-slide="1"></div>
+            <div class="indicator" data-slide="2"></div>
+        </div>
+    </div>
+    
+    <!-- 3:1 Wide Cards Section -->
+    <div class="section">
+        <div class="scroll-container">
+            <a href="course1.html" class="card wide-card card-link"><img src="" alt=""></a>
+            <a href="course2.html" class="card wide-card card-link"><img src="" alt=""></a>
+            <a href="course3.html" class="card wide-card card-link"><img src="" alt=""></a>
+        </div>
+    </div>
+    
+    <!-- Videos Section -->
+    <div class="section">
+        <div class="section-header">
+            <h2 class="section-title">For Beginners</h2>
+            <a href="videos.html" class="see-all">See All <i class="fas fa-chevron-right"></i></a>
+        </div>
+        
+        <div class="scroll-container">
+            <a href="video1.html" class="card video-card card-link">
+                <img src="" alt="">
+                <div class="play-icon">
+                    <i class="fas fa-play"></i>
+                </div>
+            </a>
+            <a href="video2.html" class="card video-card card-link">
+                <img src="" alt="">
+                <div class="play-icon">
+                    <i class="fas fa-play"></i>
+                </div>
+            </a>
+            <a href="video3.html" class="card video-card card-link">
+                <img src="" alt="">
+                <div class="play-icon">
+                    <i class="fas fa-play"></i>
+                </div>
+            </a>
+        </div>
+    </div>
+    
+    <!-- Videos Section -->
+    <div class="section">
+        <div class="section-header">
+            <h2 class="section-title">For Beginners</h2>
+            <a href="videos.html" class="see-all">See All <i class="fas fa-chevron-right"></i></a>
+        </div>
+        
+        <div class="scroll-container">
+            <a href="video1.html" class="card video-card card-link">
+                <img src="" alt="">
+                <div class="play-icon">
+                    <i class="fas fa-play"></i>
+                </div>
+            </a>
+            <a href="video2.html" class="card video-card card-link">
+                <img src="" alt="">
+                <div class="play-icon">
+                    <i class="fas fa-play"></i>
+                </div>
+            </a>
+            <a href="video3.html" class="card video-card card-link">
+                <img src="" alt="">
+                <div class="play-icon">
+                    <i class="fas fa-play"></i>
+                </div>
+            </a>
+        </div>
+    </div>
+    
+    <!-- Videos Section -->
+    <div class="section">
+        <div class="section-header">
+            <h2 class="section-title">For Beginners</h2>
+            <a href="videos.html" class="see-all">See All <i class="fas fa-chevron-right"></i></a>
+        </div>
+        
+        <div class="scroll-container">
+            <a href="video1.html" class="card video-card card-link">
+                <img src="" alt="">
+                <div class="play-icon">
+                    <i class="fas fa-play"></i>
+                </div>
+            </a>
+            <a href="video2.html" class="card video-card card-link">
+                <img src="" alt="">
+                <div class="play-icon">
+                    <i class="fas fa-play"></i>
+                </div>
+            </a>
+            <a href="video3.html" class="card video-card card-link">
+                <img src="" alt="">
+                <div class="play-icon">
+                    <i class="fas fa-play"></i>
+                </div>
+            </a>
+        </div>
+    </div>
+    
+    <!-- Topics Section -->
+    <div class="section">
+        <div class="section-header">
+            <h2 class="section-title">Topics</h2>
+            <a href="topics.html" class="see-all">See All <i class="fas fa-chevron-right"></i></a>
+        </div>
+        
+        <div class="topics-container">
+            <a href="algebra.html" class="topic-card card-link">Algebra</a>
+            <a href="geometry.html" class="topic-card card-link">Geometry</a>
+            <a href="biology.html" class="topic-card card-link">Biology</a>
+            <a href="chemistry.html" class="topic-card card-link">Chemistry</a>
+            <a href="physics.html" class="topic-card card-link">Physics</a>
+            <a href="history.html" class="topic-card card-link">World History</a>
+            <a href="literature.html" class="topic-card card-link">Literature</a>
+            <a href="programming.html" class="topic-card card-link">Programming</a>
+        </div>
+    </div>
+    
+    <!-- Events Section -->
+    <div class="section">
+        <div class="section-header">
+            <h2 class="section-title">Upcoming Events</h2>
+            <a href="events.html" class="see-all">See All <i class="fas fa-chevron-right"></i></a>
+        </div>
+        
+        <div class="scroll-container">
+            <a href="event1.html" class="card event-card card-link"><img src="" alt=""></a>
+            <a href="event2.html" class="card event-card card-link"><img src="" alt=""></a>
+            <a href="event3.html" class="card event-card card-link"><img src="" alt=""></a>
+        </div>
+    </div>
+    
+    <!-- Categories Section -->
+    <div class="section">
+        <div class="section-header">
+            <h2 class="section-title">Learning Categories</h2>
+            <a href="categories.html" class="see-all">See All <i class="fas fa-chevron-right"></i></a>
+        </div>
+        
+        <div class="scroll-container">
+            <a href="science.html" class="card circle-card card-link">Science</a>
+            <a href="math.html" class="card circle-card card-link">Mathematics</a>
+            <a href="arts.html" class="card circle-card card-link">Arts</a>
+            <a href="languages.html" class="card circle-card card-link">Languages</a>
+            <a href="technology.html" class="card circle-card card-link">Technology</a>
+        </div>
+    </div>
+    
+    <!-- Quiz Section -->
+    <div class="section">
+        <div class="section-header">
+            <h2 class="section-title">Daily Quizzes</h2>
+            <a href="quizzes.html" class="see-all">See All <i class="fas fa-chevron-right"></i></a>
+        </div>
+        
+        <div class="scroll-container">
+            <a href="quiz1.html" class="card quiz-card card-link">Basic Math Quiz</a>
+            <a href="quiz2.html" class="card quiz-card card-link">Science Fundamentals</a>
+            <a href="quiz3.html" class="card quiz-card card-link">History Challenge</a>
+            <a href="quiz4.html" class="card quiz-card card-link">Grammar Test</a>
+        </div>
+    </div>
+    
+    <!-- Landscape Image Card -->
+    <div class="section">
+        <a href="featured.html" class="card landscape-card card-link"><img src="" alt=""></a>
+    </div>
+    
+    <!-- Books Section - Enhanced -->
+    <div class="section">
+        <div class="section-header">
+            <h2 class="section-title">Recommended Books</h2>
+            <a href="books.html" class="see-all">See All <i class="fas fa-chevron-right"></i></a>
+        </div>
+        
+        <div class="scroll-container">
+            <a href="book1.html" class="card book-card card-link">
+                <div class="book-badge">Bestseller</div>
+                <div class="book-cover">
+                    <img src="" alt="">
+                </div>
+                <div class="book-details">
+                    <h3 class="book-title">Advanced Algebra Concepts</h3>
+                    <div class="book-author">by Dr. Math Expert</div>
+                    <div class="book-rating">
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <span>4.5</span>
+                    </div>
+                    <div class="book-price">$24.99</div>
+                </div>
+            </a>
+            <a href="book2.html" class="card book-card card-link">
+                <div class="book-badge">New</div>
+                <div class="book-cover">
+                    <img src="" alt="">
+                </div>
+                <div class="book-details">
+                    <h3 class="book-title">Quantum Physics Explained</h3>
+                    <div class="book-author">by Prof. Science</div>
+                    <div class="book-rating">
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                        </div>
+                        <span>4.0</span>
+                    </div>
+                    <div class="book-price">$29.99</div>
+                </div>
+            </a>
+            <a href="book3.html" class="card book-card card-link">
+                <div class="book-cover">
+                    <img src="" alt="">
+                </div>
+                <div class="book-details">
+                    <h3 class="book-title">The Complete History Guide</h3>
+                    <div class="book-author">by Historian Author</div>
+                    <div class="book-rating">
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <span>5.0</span>
+                    </div>
+                    <div class="book-price">$19.99</div>
+                </div>
+            </a>
+            <a href="book4.html" class="card book-card card-link">
+                <div class="book-badge">Sale</div>
+                <div class="book-cover">
+                    <img src="" alt="">
+                </div>
+                <div class="book-details">
+                    <h3 class="book-title">Programming Mastery</h3>
+                    <div class="book-author">by Code Wizard</div>
+                    <div class="book-rating">
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <span>5.0</span>
+                    </div>
+                    <div class="book-price"><span style="text-decoration: line-through; color: #999; margin-right: 5px;">$34.99</span> $24.99</div>
+                </div>
+            </a>
+        </div>
+    </div>
+    
+    <!-- Wide Image Cards -->
+    <div class="section">
+        <div class="scroll-container">
+            <a href="promo1.html" class="card wide-image-card card-link"><img src="" alt=""></a>
+            <a href="promo2.html" class="card wide-image-card card-link"><img src="" alt=""></a>
+        </div>
+    </div>
+    
+    <!-- Notes Section -->
+    <div class="section">
+        <div class="section-header">
+            <h2 class="section-title">Study Notes</h2>
+            <a href="notes.html" class="see-all">See All <i class="fas fa-chevron-right"></i></a>
+        </div>
+        
+        <div class="scroll-container">
+            <a href="note1.html" class="card notes-card card-link">
+                <h3>Math Formulas</h3>
+            </a>
+            <a href="note2.html" class="card notes-card card-link">
+                <h3>Chemistry Reactions</h3>
+            </a>
+            <a href="note3.html" class="card notes-card card-link">
+                <h3>Historical Dates</h3>
+            </a>
+            <a href="note4.html" class="card notes-card card-link">
+                <h3>Grammar Rules</h3>
+            </a>
+        </div>
+    </div>
+    
+    <!-- Image Card -->
+    <div class="section">
+        <a href="special.html" class="card landscape-card card-link"><img src="" alt=""></a>
+    </div>
+    
+    <!-- Articles Section -->
+    <div class="section">
+        <div class="section-header">
+            <h2 class="section-title">Latest Articles</h2>
+            <a href="articles.html" class="see-all">See All <i class="fas fa-chevron-right"></i></a>
+        </div>
+        
+        <div class="scroll-container">
+            <a href="article1.html" class="card article-card card-link">
+                <img src="" alt="">
+                <div class="article-content">
+                    <h3 class="article-title">10 Study Tips for Exams</h3>
+                </div>
+            </a>
+            <a href="article2.html" class="card article-card card-link">
+                <img src="" alt="">
+                <div class="article-content">
+                    <h3 class="article-title">The Future of Online Learning</h3>
+                </div>
+            </a>
+            <a href="article3.html" class="card article-card card-link">
+                <img src="" alt="">
+                <div class="article-content">
+                    <h3 class="article-title">Career Paths in STEM</h3>
+                </div>
+            </a>
+        </div>
+    </div>
+    
+    <!-- Challenge Card with Fire Animation -->
+    <div class="section">
+        <a href="challenge.html" class="card-link">
+            <div class="challenge-card">
+                <div class="fire-animation"></div>
+                <div class="flame"></div>
+                <div class="flame"></div>
+                <div class="flame"></div>
+                <h2 class="challenge-title">Advanced Challenge</h2>
+                <p class="challenge-desc">Test your knowledge with these difficult topics</p>
+                <button class="challenge-btn">Take Challenge</button>
+            </div>
+        </a>
+    </div>
+    
+    <script>
+        // Time-based greeting
+        function updateGreeting() {
+            const hour = new Date().getHours();
+            let greeting;
+            
+            if (hour < 12) {
+                greeting = "Good morning";
+            } else if (hour < 18) {
+                greeting = "Good afternoon";
+            } else {
+                greeting = "Good evening";
+            }
+            
+            document.getElementById('greeting').textContent = greeting;
+        }
+        
+        // Carousel functionality
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.carousel-slide');
+        const indicators = document.querySelectorAll('.indicator');
+        const totalSlides = slides.length;
+        
+        function updateCarousel() {
+            document.querySelector('.carousel').style.transform = `translateX(-${currentSlide * 33.333}%)`;
+            
+            // Update indicators
+            indicators.forEach((indicator, index) => {
+                if (index === currentSlide) {
+                    indicator.classList.add('active');
+                } else {
+                    indicator.classList.remove('active');
+                }
+            });
+        }
+        
+        document.getElementById('nextBtn').addEventListener('click', () => {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            updateCarousel();
+        });
+        
+        document.getElementById('prevBtn').addEventListener('click', () => {
+            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+            updateCarousel();
+        });
+        
+        // Click on indicators
+        indicators.forEach(indicator => {
+            indicator.addEventListener('click', () => {
+                currentSlide = parseInt(indicator.getAttribute('data-slide'));
+                updateCarousel();
+            });
+        });
+        
+        // Auto-advance carousel
+        setInterval(() => {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            updateCarousel();
+        }, 5000);
+        
+        // Initialize
+        updateGreeting();
+        updateCarousel();
+        
+        // Simple animation on scroll
+        document.addEventListener('DOMContentLoaded', function() {
+            const sections = document.querySelectorAll('.section');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('fade-in');
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+            
+            // All links open in same tab (default behavior)
+            document.querySelectorAll('.card-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    // You can add tracking or other functionality here
+                    console.log('Navigating to: ' + this.getAttribute('href'));
+                });
+            });
+        });
+    </script>
+</body>
+</html>
