@@ -19,11 +19,16 @@
             padding-bottom: 50px;
         }
         
+        
         /* Header Styles */
         header {
             padding: 15px;
             text-align: left;
         }
+        
+        .card-link {
+    -webkit-tap-highlight-color: transparent;
+}
         
         .greeting {
             font-size: 1.5rem;
@@ -165,14 +170,16 @@
         
         /* Scrollable Card Containers */
         .scroll-container {
-            display: flex;
-            overflow-x: auto;
-            scroll-snap-type: x mandatory;
-            padding: 0 15px 15px;
-            gap: 15px;
-            scrollbar-width: none;
-            -ms-overflow-style: none;
-        }
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding: 0 15px 15px;
+    gap: 15px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    width: 95%; /* Add this line */
+    margin: 0 auto; /* Add this to center the container */
+}
         
         .scroll-container::-webkit-scrollbar {
             display: none;
